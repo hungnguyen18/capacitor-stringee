@@ -1,7 +1,7 @@
 {
-  "name": "@wellcare/capacitor-plugin-starter",
+  "name": "@wellcare/capacitor-stringee",
   "version": "0.0.1",
-  "description": "Boilerplate for Capacitor Plugin",
+  "description": "Capacitor Plugin Stringee",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -11,20 +11,20 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorPluginStarter.podspec"
+    "CapacitorStringee.podspec"
   ],
   "author": "Wellcare",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wellcare/capacitor-plugin-starter.git",
-    "directory": "packages/capacitor-plugin-starter"
+    "url": "git+https://github.com/wellcare/capacitor-stringee.git",
+    "directory": "packages/capacitor-stringee"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },  
   "bugs": {
-    "url": "https://github.com/wellcare/capacitor-plugin-starter/issues"
+    "url": "https://github.com/wellcare/capacitor-stringee/issues"
   },
   "keywords": [
     "capacitor",
@@ -34,7 +34,7 @@
   "scripts": {
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
-    "docgen": "docgen --api CapacitorPluginStarterPlugin --output-readme README.md --output-json dist/docs.json",
+    "docgen": "docgen --api CapacitorStringeePlugin --output-readme README.md --output-json dist/docs.json",
     "eslint": "eslint . --ext ts",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
     "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",

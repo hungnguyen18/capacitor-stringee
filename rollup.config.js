@@ -4,7 +4,7 @@ export default {
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorCapacitorPluginStarter',
+      name: 'capacitorCapacitorStringee',
       globals: {
         '@capacitor/core': 'capacitorExports',
       },

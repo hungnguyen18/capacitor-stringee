@@ -1,11 +1,11 @@
-# capacitor-plugin-starter
+# capacitor-stringee
 
-Boilerplate for Capacitor Plugin
+Capacitor Plugin for Stringee Apps
 
 ## Install
 
 ```bash
-npm install capacitor-plugin-starter
+npm install capacitor-stringee
 npx cap sync
 ```
 

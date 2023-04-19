@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { CapacitorPluginStarter } from '@wellcare/capacitor-plugin-starter'
+import { CapacitorStringee } from '@wellcare/capacitor-stringee'
 
 export default defineComponent({
   name: 'HomePage',
@@ -25,7 +25,7 @@ export default defineComponent({
         false
       )
     }
-    CapacitorPluginStarter.echo({ value: 'hello' }).then((res) =>
+    CapacitorStringee.echo({ value: 'hello' }).then((res) =>
       logs.value.push(res.value)
     )
 

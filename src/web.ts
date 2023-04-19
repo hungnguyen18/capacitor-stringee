@@ -1,10 +1,10 @@
 import { WebPlugin } from '@capacitor/core'
 
-import type { CapacitorPluginStarterPlugin } from './definitions'
+import type { CapacitorStringeePlugin } from './definitions'
 
-export class CapacitorPluginStarterWeb
+export class CapacitorStringeeWeb
   extends WebPlugin
-  implements CapacitorPluginStarterPlugin
+  implements CapacitorStringeePlugin
 {
   async echo(options: { value: string }): Promise<{ value: string }> {
     console.log('[web] echo - options ', options)
@@ -12,6 +12,6 @@ export class CapacitorPluginStarterWeb
   }
 }
 
-const CapacitorPluginStarter = new CapacitorPluginStarterWeb()
+const CapacitorStringee = new CapacitorStringeeWeb()
 
-export { CapacitorPluginStarter }
+export { CapacitorStringee }

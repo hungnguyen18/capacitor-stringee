@@ -1,13 +1,13 @@
 import { registerPlugin } from '@capacitor/core'
 
-import type { CapacitorPluginStarterPlugin } from './definitions'
+import type { CapacitorStringeePlugin } from './definitions'
 
-const CapacitorPluginStarter = registerPlugin<CapacitorPluginStarterPlugin>(
-  'CapacitorPluginStarter',
+const CapacitorStringee = registerPlugin<CapacitorStringeePlugin>(
+  'CapacitorStringee',
   {
-    web: () => import('./web').then((m) => new m.CapacitorPluginStarterWeb())
+    web: () => import('./web').then((m) => new m.CapacitorStringeeWeb())
   }
 )
 
 export * from './definitions'
-export { CapacitorPluginStarter }
+export { CapacitorStringee }

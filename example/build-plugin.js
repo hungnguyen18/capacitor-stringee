@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const nodeModulePath = './node_modules/@wellcare/capacitor-plugin-starter/'
+const nodeModulePath = './node_modules/@wellcare/capacitor-stringee/'
 
 
 function copy(src, dest, condition = { extension: undefined }) {
@@ -30,4 +30,4 @@ copy(path.resolve(__dirname, '../dist'), path.resolve(__dirname, `${nodeModulePa
 copy(path.resolve(__dirname, '../package.json'), path.resolve(__dirname, `${nodeModulePath}/package.json`))
 copy(path.resolve(__dirname, '../android'), path.resolve(__dirname, `${nodeModulePath}/android`))
 copy(path.resolve(__dirname, '../ios'), path.resolve(__dirname, `${nodeModulePath}/ios`))
-fs.copyFileSync(path.resolve(__dirname, '../CapacitorPluginStarter.podspec'), path.resolve(__dirname, `${nodeModulePath}/CapacitorPluginStarter.podspec`))
+fs.copyFileSync(path.resolve(__dirname, '../CapacitorStringee.podspec'), path.resolve(__dirname, `${nodeModulePath}/CapacitorStringee.podspec`))

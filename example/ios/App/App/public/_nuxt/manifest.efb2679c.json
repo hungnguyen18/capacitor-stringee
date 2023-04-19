@@ -1,6 +1,6 @@
 {
-  "name": "@wellcare/capacitor-plugin-starter-example",
-  "short_name": "@wellcare/capacitor-plugin-starter-example",
+  "name": "@wellcare/capacitor-stringee-example",
+  "short_name": "@wellcare/capacitor-stringee-example",
   "description": "Capacitor Plugin Starter Example",
   "icons": [
     {

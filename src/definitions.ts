@@ -1,4 +1,4 @@
-export interface CapacitorPluginStarterPlugin {
+export interface CapacitorStringeePlugin {
   /**
    * echo input value
    */

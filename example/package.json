@@ -1,11 +1,11 @@
 {
-  "name": "@wellcare/capacitor-plugin-starter-example",
+  "name": "@wellcare/capacitor-stringee-example",
   "version": "0.0.1",
   "description": "Capacitor Plugin Starter Example",
-  "homepage": "https://github.com/wellcare/capacitor-plugin-starter#readme",
+  "homepage": "https://github.com/wellcare/capacitor-stringee#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wellcare/capacitor-plugin-starter.git"
+    "url": "git+https://github.com/wellcare/capacitor-stringee.git"
   },
   "license": "UNLICENSED",
   "author": "Wellcare",
@@ -24,7 +24,7 @@
     "lint": "eslint --ext .ts,.vue . src/ --fix",
     "serve": "nuxt serve",
     "start": "nuxt start",
-    "clean:plugin" : "rimraf ./node_modules/@wellcare/capacitor-plugin-starter",
+    "clean:plugin" : "rimraf ./node_modules/@wellcare/capacitor-stringee",
     "webpack": "nuxt webpack"
   },
   "dependencies": {
@@ -35,7 +35,7 @@
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/toast": "^3.3.1",
-    "@wellcare/capacitor-plugin-starter": "file:..",
+    "@wellcare/capacitor-stringee": "file:..",
     "@wellcare/vue-component": "^0.1.33",
     "axios": "^0.26.1",
     "cookie-universal-nuxt": "^2.1.5",

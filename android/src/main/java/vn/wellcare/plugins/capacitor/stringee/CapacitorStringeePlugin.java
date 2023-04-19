@@ -6,10 +6,10 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
-@CapacitorPlugin(name = "CapacitorPluginStarter")
-public class CapacitorPluginStarterPlugin extends Plugin {
+@CapacitorPlugin(name = "CapacitorStringee")
+public class CapacitorStringeePlugin extends Plugin {
 
-  private CapacitorPluginStarter implementation = new CapacitorPluginStarter();
+  private CapacitorStringee implementation = new CapacitorStringee();
 
   @PluginMethod
   public void echo(PluginCall call) {
