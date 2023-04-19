@@ -1,0 +1,35 @@
+kind: pipeline
+type: docker
+name: release-package
+
+workspace:
+  base: /drone
+  path: /drone/src
+
+steps:
+  - name: build-test-publish
+    image: docker:dind
+    pull: if-not-exists
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    environment:
+      GIT_TOKEN: ${GIT_TOKEN}
+      DOCKER_USERNAME:
+        from_secret: DOCKER_USERNAME
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
+    commands:
+      - docker login -u $${DOCKER_USERNAME} -p $${DOCKER_PASSWORD}
+      - docker build --rm -t mhealthvn/${DRONE_REPO_NAME}:${DRONE_COMMIT} . --build-arg GIT_TAG=${DRONE_TAG##v} --build-arg GIT_TOKEN=${GIT_TOKEN}
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+
+trigger:
+  branch:
+    - master
+  event:
+    - tag
