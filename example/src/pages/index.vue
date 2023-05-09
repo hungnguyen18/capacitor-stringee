@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { CapacitorStringee } from '@wellcare/capacitor-stringee'
-
+/// //
 export default defineComponent({
   name: 'HomePage',
   setup() {
