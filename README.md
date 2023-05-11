@@ -14,6 +14,9 @@ npx cap sync
 <docgen-index>
 
 * [`echo(...)`](#echo)
+* [`StringeeConnect(...)`](#stringeeconnect)
+* [`StringeeCall(...)`](#stringeecall)
+* [`StringeeReject()`](#stringeereject)
 
 </docgen-index>
 
@@ -33,6 +36,42 @@ echo input value
 | **`options`** | <code>{ value: string; }</code> |
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
+
+--------------------
+
+
+### StringeeConnect(...)
+
+```typescript
+StringeeConnect(token: string) => void
+```
+
+| Param       | Type                |
+| ----------- | ------------------- |
+| **`token`** | <code>string</code> |
+
+--------------------
+
+
+### StringeeCall(...)
+
+```typescript
+StringeeCall(callFrom: string, callTo: string) => void
+```
+
+| Param          | Type                |
+| -------------- | ------------------- |
+| **`callFrom`** | <code>string</code> |
+| **`callTo`**   | <code>string</code> |
+
+--------------------
+
+
+### StringeeReject()
+
+```typescript
+StringeeReject() => void
+```
 
 --------------------
 
