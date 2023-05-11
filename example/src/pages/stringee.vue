@@ -25,29 +25,25 @@ export default defineComponent({
     const isAuth = ref(false)
     const StringeePlugin = CapacitorStringee
     const auth = () => {
-      if (process.client) StringeePlugin.StringeeConnect(token.value)
+      if (process.client)
+        StringeePlugin.StringeeConnect(token.value, onClientEvent)
     }
     const call = () => {
       if (process.client)
-        StringeePlugin.StringeeCall(callFrom.value, callTo.value)
+        StringeePlugin.StringeeCall(callFrom.value, callTo.value, onCallEvent)
     }
     const reject = () => {
       if (process.client) StringeePlugin.StringeeReject()
     }
-    // StringeePlugin.addListener('singaling-state', (data: any) => {
-    //   console.log(data, ' line 37')
-    //   if (data.reason) status.value = data.reason
-    // })
-    StringeePlugin.addListener('lk_ips', (message: string) => {
-      console.log(message)
-      if (message === 'authen') isAuth.value = true
-    })
-    StringeePlugin.addListener('call-log2', (message: string) => {
-      console.log(message, ' line 46')
-    })
-    StringeePlugin.addListener('call-log', (message: string) => {
-      console.log(message, ' line 46')
-    })
+    const onClientEvent = (data: any) => {
+      if (data.event === 'authen') isAuth.value = true
+    }
+    const onCallEvent = (data: any) => {
+      console.log(data.event)
+      if (data.event === 'signaling-state') {
+        status.value = data.data.reason
+      }
+    }
     return {
       token,
       callFrom,
