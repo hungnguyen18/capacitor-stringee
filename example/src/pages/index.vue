@@ -25,7 +25,7 @@ export default defineComponent({
         false
       )
     }
-    CapacitorStringee.echo({ value: 'hello' }).then((res) =>
+    CapacitorStringee.echo({ value: 'hello /?' }).then((res) =>
       logs.value.push(res.value)
     )
 
