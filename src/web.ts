@@ -12,69 +12,112 @@ export class CapacitorStringeeWeb
   #client: any
   #call: any
   #isAuth: boolean = false
-  StringeeConnect(token: string) {
+  StringeeConnect(token: string, listenerFunc: (data: any) => void) {
+    const dataEmit = {
+      event: 'none',
+      data: {}
+    }
     this.#client = new StringeeClient()
     this.#client.connect(token)
     this.#client.on('connect', () => {
-      this.notifyListeners('stringee-log', 'connect')
+      // this.notifyListeners('stringee-log', 'connect')
+      dataEmit.event = 'connect'
+      listenerFunc(dataEmit)
     })
     this.#client.on('authen', (res: any) => {
       if (res.r === 0) {
         this.#isAuth = true
-        this.notifyListeners('stringee-log', 'authen')
+        // this.notifyListeners('stringee-log', 'authen')
+        dataEmit.event = 'authen'
+        listenerFunc(dataEmit)
       } else {
         console.error(res.message)
       }
     })
     this.#client.on('disconnect', () => {
       this.#isAuth = false
-      this.notifyListeners('stringee-log', 'disconnect')
+      // this.notifyListeners('stringee-log', 'disconnect')
+      dataEmit.event = 'disconnect'
+      listenerFunc(dataEmit)
     })
     this.#client.on('incomingcall', (res: any) => {
-      this.notifyListeners('incoming-call', res)
+      // this.notifyListeners('incoming-call', res)
+      dataEmit.event = 'incomingcall'
+      dataEmit.data = res
+      listenerFunc(dataEmit)
     })
     this.#client.on('otherdeviceauthen', (data: any) => {
-      this.notifyListeners('otherdevice-authen', data)
+      dataEmit.event = 'otherdevice-authen'
+      dataEmit.data = data
+      // this.notifyListeners('otherdevice-authen', data)
     })
   }
-  StringeeCall(callFrom: string, callTo: string) {
+  StringeeCall(
+    callFrom: string,
+    callTo: string,
+    listenerFunc: (data: any) => void
+  ) {
     // const emitEvent = (name: string, data: any) => {
     //   this.notifyListeners(name, data)
     // }
+    const dataEmit = {
+      event: 'none',
+      data: {}
+    }
     if (this.#isAuth && this.#client) {
-      this.notifyListeners('call-log', 'start')
       this.#call = new StringeeCall(this.#client, callFrom, callTo)
       this.#call.makeCall((res: any) => {
-        if (res.r !== 0) console.log('call-status', res.message)
+        if (res.r !== 0) console.error(res.message)
       })
 
       this.#call.on('error', (info: any) => {
         console.error(info)
-        this.notifyListeners('error', info)
+        // this.notifyListeners('error', info)
+        dataEmit.event = 'error'
+        dataEmit.data = info
+        listenerFunc(dataEmit)
       })
 
       this.#call.on('addlocalstream', (stream: any) => {
-        this.notifyListeners('add-localstream', stream)
+        // this.notifyListeners('add-localstream', stream)
+        dataEmit.event = 'add-localstream'
+        dataEmit.data = stream
+        listenerFunc(dataEmit)
       })
       this.#call.on('addremotestream', (stream: any) => {
-        this.notifyListeners('add-remotestream', stream)
+        // this.notifyListeners('add-remotestream', stream)
+        dataEmit.event = 'add-remotestream'
+        dataEmit.data = stream
+        listenerFunc(dataEmit)
       })
 
       this.#call.on('signalingstate', (state: any) => {
-        console.log(state, ' line 64')
-        this.notifyListeners('signaling-state', state)
+        // console.log(state, ' line 64')
+        // this.notifyListeners('signaling-state', state)
+        dataEmit.event = 'signaling-state'
+        dataEmit.data = state
+        listenerFunc(dataEmit)
       })
 
       this.#call.on('mediastate', (state: any) => {
-        this.notifyListeners('media-state', state)
+        // this.notifyListeners('media-state', state)
+        dataEmit.event = 'media-state'
+        dataEmit.data = state
+        listenerFunc(dataEmit)
       })
 
       this.#call.on('info', (info: any) => {
-        this.notifyListeners('info', info)
+        // this.notifyListeners('info', info)
+        dataEmit.event = 'info'
+        dataEmit.data = info
+        listenerFunc(dataEmit)
       })
 
       this.#call.on('otherdevice', (data: any) => {
-        this.notifyListeners('otherdevice', data)
+        // this.notifyListeners('otherdevice', data)
+        dataEmit.event = 'otherdevice'
+        dataEmit.data = data
+        listenerFunc(dataEmit)
       })
     }
   }
