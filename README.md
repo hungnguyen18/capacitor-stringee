@@ -17,6 +17,8 @@ npx cap sync
 * [`StringeeConnect(...)`](#stringeeconnect)
 * [`StringeeCall(...)`](#stringeecall)
 * [`StringeeReject()`](#stringeereject)
+* [`addListener(string, ...)`](#addlistenerstring)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -43,12 +45,13 @@ echo input value
 ### StringeeConnect(...)
 
 ```typescript
-StringeeConnect(token: string) => void
+StringeeConnect(token: string, listenerFunc: (data: any) => void) => void
 ```
 
-| Param       | Type                |
-| ----------- | ------------------- |
-| **`token`** | <code>string</code> |
+| Param              | Type                                |
+| ------------------ | ----------------------------------- |
+| **`token`**        | <code>string</code>                 |
+| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
 
 --------------------
 
@@ -56,13 +59,14 @@ StringeeConnect(token: string) => void
 ### StringeeCall(...)
 
 ```typescript
-StringeeCall(callFrom: string, callTo: string) => void
+StringeeCall(callFrom: string, callTo: string, listenerFunc: (data: any) => void) => void
 ```
 
-| Param          | Type                |
-| -------------- | ------------------- |
-| **`callFrom`** | <code>string</code> |
-| **`callTo`**   | <code>string</code> |
+| Param              | Type                                |
+| ------------------ | ----------------------------------- |
+| **`callFrom`**     | <code>string</code>                 |
+| **`callTo`**       | <code>string</code>                 |
+| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
 
 --------------------
 
@@ -74,5 +78,31 @@ StringeeReject() => void
 ```
 
 --------------------
+
+
+### addListener(string, ...)
+
+```typescript
+addListener(name: string, listenerFunc: (data: any) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+```
+
+| Param              | Type                                |
+| ------------------ | ----------------------------------- |
+| **`name`**         | <code>string</code>                 |
+| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+
+--------------------
+
+
+### Interfaces
+
+
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
 
 </docgen-api>
