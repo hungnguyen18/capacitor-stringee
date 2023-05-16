@@ -11,7 +11,8 @@ export interface CapacitorStringeePlugin {
     callTo: string,
     listenerFunc: (data: any) => void
   ): void
-  StringeeReject(): void
+  StringeeReject(listenerFunc: (data: any) => void): void
+  StringeeHangup(listenerFunc: (data: any) => void): void
   // listener for connect event
   // bug detect: seem capacitor only notify only one event, so I will temporary comment it
   addListener(

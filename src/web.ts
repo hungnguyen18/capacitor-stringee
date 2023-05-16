@@ -121,10 +121,27 @@ export class CapacitorStringeeWeb
       })
     }
   }
-  StringeeReject(): void {
+  StringeeReject(listenerFunc: (data: any) => void): void {
     if (this.#call) {
       this.#call.reject((res: any) => {
-        this.notifyListeners('call-reject', res)
+        // this.notifyListeners('call-reject', res)
+        const dataEmit = {
+          event: 'call-reject',
+          data: res
+        }
+        listenerFunc(dataEmit)
+      })
+    }
+  }
+  StringeeHangup(listenerFunc: (data: any) => void): void {
+    if (this.#call) {
+      this.#call.hangup((res: any) => {
+        // console.log("hangup res", res);
+        const dataEmit = {
+          event: 'call-hangup',
+          data: res
+        }
+        listenerFunc(dataEmit)
       })
     }
   }
