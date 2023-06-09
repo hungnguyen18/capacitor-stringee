@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { NuxtOptions } from '@nuxt/types'
-import DotEnv from 'dotenv'
+import { config } from 'dotenv'
 import {
   axiosConfig,
   buildConfg,
@@ -11,7 +11,7 @@ import {
   toastConfig,
   vuetifyConfig
 } from './src/configs/index'
-DotEnv.config({ path: './.env' })
+config({ path: './.env' })
 
 export default {
   target: 'static',
