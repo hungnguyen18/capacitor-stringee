@@ -16,7 +16,8 @@ npx cap sync
 * [`echo(...)`](#echo)
 * [`StringeeConnect(...)`](#stringeeconnect)
 * [`StringeeCall(...)`](#stringeecall)
-* [`StringeeReject()`](#stringeereject)
+* [`StringeeReject(...)`](#stringeereject)
+* [`StringeeHangup(...)`](#stringeehangup)
 * [`addListener(string, ...)`](#addlistenerstring)
 * [Interfaces](#interfaces)
 
@@ -71,11 +72,28 @@ StringeeCall(callFrom: string, callTo: string, listenerFunc: (data: any) => void
 --------------------
 
 
-### StringeeReject()
+### StringeeReject(...)
 
 ```typescript
-StringeeReject() => void
+StringeeReject(listenerFunc: (data: any) => void) => void
 ```
+
+| Param              | Type                                |
+| ------------------ | ----------------------------------- |
+| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
+
+--------------------
+
+
+### StringeeHangup(...)
+
+```typescript
+StringeeHangup(listenerFunc: (data: any) => void) => void
+```
+
+| Param              | Type                                |
+| ------------------ | ----------------------------------- |
+| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
 
 --------------------
 

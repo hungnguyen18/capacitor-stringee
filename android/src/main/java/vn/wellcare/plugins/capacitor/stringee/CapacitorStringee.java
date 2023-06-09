@@ -1,4 +1,4 @@
-package vn.wellcare.plugins.capacitor.starter;
+package vn.wellcare.plugins.capacitor.stringee;
 import android.util.Log;
 
 public class CapacitorStringee  {
