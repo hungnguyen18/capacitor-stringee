@@ -32,7 +32,6 @@
 
     <application
         android:allowBackup="true"
-        android:label="CapacitorStringee"
         android:hardwareAccelerated="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

@@ -14,15 +14,6 @@ public class CapacitorStringeePlugin extends Plugin {
 
   private CapacitorStringee implementation = new CapacitorStringee();
 
-  @PluginMethod
-  public void echo(PluginCall call) {
-    String value = call.getString("value");
-
-    JSObject ret = new JSObject();
-    ret.put("value", implementation.echo(value));
-    call.resolve(ret);
-  }
-
   // @PluginMethod
   // public void StringeeConnect(PluginCall call) {
   //   String token = call.getString("token");

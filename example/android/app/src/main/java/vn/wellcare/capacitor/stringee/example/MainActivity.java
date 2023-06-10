@@ -1,4 +1,4 @@
-package vn.wellcare.capacitor.plugin.example;
+package vn.wellcare.capacitor.stringee.example;
 
 import com.getcapacitor.BridgeActivity;
 

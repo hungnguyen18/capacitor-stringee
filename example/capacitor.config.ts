@@ -5,11 +5,7 @@ const config: CapacitorConfig = {
   appName: 'CapacitorStringeeExample',
   webDir: 'dist',
   bundledWebRuntime: false,
-  plugins: {
-    SplashScreen: {
-      launchShowDuration: 0
-    }
-  },
+  plugins: {},
   cordova: {},
   server: {
     iosScheme: 'nuxtmobile'
