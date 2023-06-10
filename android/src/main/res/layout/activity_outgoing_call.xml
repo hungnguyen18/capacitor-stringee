@@ -23,7 +23,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="20dp"
-        android:background="@drawable/ic_switch" />
+        android:background="@drawable/ic_switch" 
+        android:contentDescription="Switch" 
+    />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -88,7 +90,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginVertical="20dp"
-            android:background="@drawable/btn_end_call_selector" />
+            android:background="@drawable/btn_end_call_selector" 
+            android:contentDescription="End Call" 
+            />
     </LinearLayout>
 
 </RelativeLayout>
