@@ -5,8 +5,8 @@
       <v-btn @click="connect">Connect</v-btn>
       <v-text-field v-model="callFrom" label="call from"></v-text-field>
       <v-text-field v-model="callTo" label="call to"></v-text-field>
-      <v-btn :disabled="!isAuth" color="primary" @click="call">Call</v-btn>
-      <v-btn :disabled="!isAuth" color="error" @click="reject">Reject</v-btn>
+      <v-btn color="primary" @click="call">Call</v-btn>
+      <v-btn color="error" @click="reject">Reject</v-btn>
       <p>Status: {{ status }}</p>
       <w-debug-log />
     </v-container>
@@ -37,16 +37,18 @@ export default defineComponent({
         StringeePlugin.StringeeCall(callFrom.value, callTo.value, onCallEvent)
     }
     const reject = () => {
-      if (process.client) StringeePlugin.StringeeReject()
+      if (process.client)
+        StringeePlugin.StringeeReject((data: any) => {
+          log({ context: 'Stringee', message: `onReject ${data.event}`, data })
+        })
     }
     const onClientEvent = (data: any) => {
-      if (data.event === 'authen') isAuth.value = true
       log({ context: 'Stringee', message: `onClientEvent ${data.event}`, data })
+      if (data.event === 'authen') isAuth.value = true
     }
     const onCallEvent = (data: any) => {
-      console.log(data.event)
+      log({ context: 'Stringee', message: `onCallEvent ${data.event}`, data })
       if (data.event === 'signaling-state') {
-        log({ context: 'Stringee', message: `onCallEvent ${data.event}`, data })
         status.value = data.data.reason
       }
     }
