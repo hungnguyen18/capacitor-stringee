@@ -36,7 +36,7 @@
     "@nuxtjs/pwa": "3.3.5",
     "@nuxtjs/toast": "3.3.1",
     "@wellcare/capacitor-stringee": "file:..",
-    "@wellcare/vue-component": "0.1.33",
+    "@wellcare/vue-component": "0.1.87",
     "axios": "0.26.1",
     "cookie-universal-nuxt": "2.1.5",
     "dotenv": "16.0.1",
