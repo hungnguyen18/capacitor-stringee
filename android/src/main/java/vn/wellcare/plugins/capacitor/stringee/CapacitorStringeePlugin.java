@@ -12,8 +12,6 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 @CapacitorPlugin(name = "CapacitorStringee")
 public class CapacitorStringeePlugin extends Plugin {
 
-  private CapacitorStringee implementation = new CapacitorStringee();
-
   // @PluginMethod
   // public void StringeeConnect(PluginCall call) {
   //   String token = call.getString("token");
