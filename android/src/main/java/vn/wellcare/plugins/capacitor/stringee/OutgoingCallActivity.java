@@ -63,15 +63,19 @@ public class OutgoingCallActivity
 
   private MediaState mMediaState;
   private SignalingState mSignalingState;
-
+//  public interface StringeeCallCallback {
+//    void onStringeeCallCreated(StringeeCall stringeeCall);
+//  }
   // /**
   //  * Setting up the activity UI, checking and requesting for necessary permissions, and starting the call.
   //  */
-   public void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
      super.onCreate(savedInstanceState);
      String from = getIntent().getStringExtra("from");
      String to = getIntent().getStringExtra("to");
-     startStringeeCall(from, to, false);
+      startStringeeCall(from, to, false);
+//     StringeeCall stringeeCall1 = startStringeeCall(from, to, false);
+//     callback.onStringeeCallCreated(stringeeCall1);
    }
 
   public StringeeCall startStringeeCall(String from,
