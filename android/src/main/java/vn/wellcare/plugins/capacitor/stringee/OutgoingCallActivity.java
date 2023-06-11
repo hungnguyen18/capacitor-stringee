@@ -2,6 +2,7 @@
 package vn.wellcare.plugins.capacitor.stringee;
 
 import android.Manifest.permission;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build.VERSION;
@@ -17,6 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.getcapacitor.JSObject;
+import com.getcapacitor.Plugin;
+
 import com.stringee.call.StringeeCall;
 import com.stringee.call.StringeeCall.MediaState;
 import com.stringee.call.StringeeCall.SignalingState;
@@ -59,12 +64,22 @@ public class OutgoingCallActivity
   private MediaState mMediaState;
   private SignalingState mSignalingState;
 
-  /**
-   * Setting up the activity UI, checking and requesting for necessary permissions, and starting the call.
-   */
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  // /**
+  //  * Setting up the activity UI, checking and requesting for necessary permissions, and starting the call.
+  //  */
+   public void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+     String from = getIntent().getStringExtra("from");
+     String to = getIntent().getStringExtra("to");
+     startStringeeCall(from, to, false);
+   }
 
+  public StringeeCall startStringeeCall(String from,
+                                        String to,
+                                        Boolean isVideoCall) {
+    if (isVideoCall == null) {
+      isVideoCall = false;
+    }
     //add Flag for show on lockScreen and disable keyguard
     getWindow()
       .addFlags(
@@ -87,9 +102,9 @@ public class OutgoingCallActivity
 
     Common.isInCall = true;
 
-    from = getIntent().getStringExtra("from");
-    to = getIntent().getStringExtra("to");
-    isVideoCall = getIntent().getBooleanExtra("is_video_call", false);
+    // from = getIntent().getStringExtra("from");
+    // to = getIntent().getStringExtra("to");
+    // isVideoCall = getIntent().getBooleanExtra("is_video_call", false);
 
     initView();
 
@@ -115,7 +130,7 @@ public class OutgoingCallActivity
       if (VERSION.SDK_INT >= VERSION_CODES.S) {
         if (
           ContextCompat.checkSelfPermission(
-            this,
+                  this,
             permission.BLUETOOTH_CONNECT
           ) !=
           PackageManager.PERMISSION_GRANTED
@@ -134,13 +149,15 @@ public class OutgoingCallActivity
           permissions,
           Common.REQUEST_PERMISSION_CALL
         );
-        return;
+        return null;
       }
     }
     if (Common.client.isConnected()) {
-      makeCall();
+      StringeeCall stringeeCall = makeCall();
+      return stringeeCall;
     } else {
       Utils.reportMessage(this, "Stringee session not connected");
+      return null;
     }
   }
 
@@ -218,7 +235,7 @@ public class OutgoingCallActivity
   /**
    * Initiates an outgoing call using the Stringee SDK.
    */
-  private void makeCall() {
+  private StringeeCall makeCall() {
     //create audio manager to control audio device
     audioManager = StringeeAudioManager.create(OutgoingCallActivity.this);
     audioManager.start(
@@ -358,6 +375,7 @@ public class OutgoingCallActivity
     );
 
     stringeeCall.makeCall();
+    return stringeeCall;
   }
 
   @Override

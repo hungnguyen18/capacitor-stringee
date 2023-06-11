@@ -13,6 +13,9 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import com.stringee.StringeeClient;
 import com.stringee.call.StringeeCall;
 import com.stringee.call.StringeeCall2;
+import com.stringee.call.StringeeCall.MediaState;
+import com.stringee.call.StringeeCall.SignalingState;
+import com.stringee.call.StringeeCall.StringeeCallListener;
 import com.stringee.exception.StringeeError;
 import com.stringee.listener.StringeeConnectionListener;
 
@@ -65,9 +68,6 @@ public class CapacitorStringeePlugin extends Plugin {
           ret.put("client", stringeeClient);
           ret.put("isReconnecting", isReconnecting);
           notifyListeners("onConnectionDisconnected", ret);
-//          if(isReconnecting != true) {
-//            stringeeClient.disconnect();
-//          }
         }
 
         @Override
@@ -151,11 +151,96 @@ public class CapacitorStringeePlugin extends Plugin {
     String from = "387283";
     String to = "84904386698";
     Context context = getContext();
-    Intent intent = new Intent(context, OutgoingCallActivity.class);
-    intent.putExtra("from", from);
-    intent.putExtra("to", to);
-    intent.putExtra("is_video_call", false);
-    context.startActivity(intent);
+     Intent intent = new Intent(context, OutgoingCallActivity.class);
+     intent.putExtra("from", from);
+     intent.putExtra("to", to);
+     intent.putExtra("is_video_call", false);
+     context.startActivity(intent);
+//    OutgoingCallActivity outgoingCallActivity = new OutgoingCallActivity();
+//    StringeeCall stringeeCall = outgoingCallActivity.startStringeeCall(from, to, false);
+//    stringeeCall.setCallListener(
+//      new StringeeCallListener() {
+//        @Override
+//        public void onSignalingStateChange(
+//          StringeeCall stringeeCall,
+//          final SignalingState signalingState,
+//          String reason,
+//          int sipCode,
+//          String sipReason
+//        ) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          ret.put("reason", reason);
+//          ret.put("sipCode", sipCode);
+//          ret.put("sipReason", sipReason);
+//          call.resolve(ret);
+//          notifyListeners("onSignalingStateChange", ret);
+//        }
+//
+//        @Override
+//        public void onError(StringeeCall stringeeCall, int code, String desc) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          ret.put("code", code);
+//          ret.put("desc", desc);
+//          call.resolve(ret);
+//        }
+//
+//        @Override
+//        public void onHandledOnAnotherDevice(
+//          StringeeCall stringeeCall,
+//          SignalingState signalingState,
+//          String desc
+//        ) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          ret.put("signalingState", signalingState);
+//          ret.put("desc", desc);
+//          call.resolve(ret);
+//          notifyListeners("onHandledOnAnotherDevice", ret);
+//        }
+//
+//        @Override
+//        public void onMediaStateChange(
+//          StringeeCall stringeeCall,
+//          final MediaState mediaState
+//        ) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          ret.put("mediaState", mediaState);
+//          call.resolve(ret);
+//          notifyListeners("onMediaStateChange", ret);
+//        }
+//
+//        @Override
+//        public void onLocalStream(final StringeeCall stringeeCall) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          call.resolve(ret);
+//          notifyListeners("onLocalStream", ret);
+//        }
+//
+//        @Override
+//        public void onRemoteStream(final StringeeCall stringeeCall) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          call.resolve(ret);
+//          notifyListeners("onRemoteStream", ret);
+//        }
+//
+//        @Override
+//        public void onCallInfo(
+//          StringeeCall stringeeCall,
+//          final JSONObject jsonObject
+//        ) {
+//          JSObject ret = new JSObject();
+//          ret.put("stringeeCall", stringeeCall);
+//          ret.put("data", jsonObject);
+//          call.resolve(ret);
+//          notifyListeners("onCallInfo", ret);
+//        }
+//      }
+//    );
   }
 
   @PluginMethod
