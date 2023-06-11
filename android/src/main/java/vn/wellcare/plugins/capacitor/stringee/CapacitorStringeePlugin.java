@@ -51,7 +51,7 @@ public class CapacitorStringeePlugin extends Plugin {
       client.setConnectionListener(new StringeeConnectionListener() {
         @Override
         public void onConnectionConnected(StringeeClient stringeeClient, boolean b) {
-          Log.d(Common.TAG, "onConnectionConnected");
+          Log.d(Common.TAG, "onConnectionConnected - isReconnected: " + b);
           JSObject ret = new JSObject();
           ret.put("client", stringeeClient);
           ret.put("isReconnected", b);
@@ -60,11 +60,14 @@ public class CapacitorStringeePlugin extends Plugin {
 
         @Override
         public void onConnectionDisconnected(StringeeClient stringeeClient, boolean isReconnecting) {
-          Log.d(Common.TAG, "onConnectionDisconnected");
+          Log.d(Common.TAG, "onConnectionDisconnected - isReconnecting: " + isReconnecting);
           JSObject ret = new JSObject();
           ret.put("client", stringeeClient);
           ret.put("isReconnecting", isReconnecting);
           notifyListeners("onConnectionDisconnected", ret);
+//          if(isReconnecting != true) {
+//            stringeeClient.disconnect();
+//          }
         }
 
         @Override
@@ -143,12 +146,15 @@ public class CapacitorStringeePlugin extends Plugin {
   @PluginMethod
   public void StringeeCall(PluginCall call) {
     Log.d(Common.TAG, "StringeeCall");
-    String from = call.getString("from");
-    String to = call.getString("to");
+//    String from = call.getString("from");
+//    String to = call.getString("to");
+    String from = "387283";
+    String to = "84904386698";
     Context context = getContext();
     Intent intent = new Intent(context, OutgoingCallActivity.class);
     intent.putExtra("from", from);
     intent.putExtra("to", to);
+    intent.putExtra("is_video_call", false);
     context.startActivity(intent);
   }
 
