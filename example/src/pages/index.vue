@@ -5,8 +5,8 @@
       <v-btn @click="connect">Connect</v-btn>
       <v-text-field v-model="callFrom" label="call from"></v-text-field>
       <v-text-field v-model="callTo" label="call to"></v-text-field>
-      <v-btn color="primary" @click="call">Call</v-btn>
-      <v-btn color="error" @click="reject">Reject</v-btn>
+      <v-btn :disabled="isAuth" color="primary" @click="call">Call</v-btn>
+      <v-btn :disabled="isAuth" color="error" @click="reject">Reject</v-btn>
       <p>Status: {{ status }}</p>
       <w-debug-log />
     </v-container>
