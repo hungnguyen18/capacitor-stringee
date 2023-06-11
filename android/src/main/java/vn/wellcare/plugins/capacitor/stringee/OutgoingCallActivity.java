@@ -137,8 +137,11 @@ public class OutgoingCallActivity
         return;
       }
     }
-
-    makeCall();
+    if (Common.client.isConnected()) {
+      makeCall();
+    } else {
+      Utils.reportMessage(this, "Stringee session not connected");
+    }
   }
 
   @Override
@@ -231,6 +234,9 @@ public class OutgoingCallActivity
     audioManager.setSpeakerphoneOn(isVideoCall);
 
     //make new call
+    if (Common.client.isConnected()) {
+      
+    }
     stringeeCall = new StringeeCall(Common.client, from, to);
     stringeeCall.setVideoCall(isVideoCall);
 
