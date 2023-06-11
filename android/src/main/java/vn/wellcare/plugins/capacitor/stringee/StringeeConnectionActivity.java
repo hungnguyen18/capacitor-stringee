@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
@@ -14,27 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleObserver;
 
 import com.stringee.StringeeClient;
-import vn.wellcare.plugins.capacitor.stringee.R.id;
-import vn.wellcare.plugins.capacitor.stringee.R.layout;
-import vn.wellcare.plugins.capacitor.stringee.R.string;
 import com.stringee.call.StringeeCall;
+import com.stringee.call.StringeeCall2;
 import com.stringee.exception.StringeeError;
 import com.stringee.listener.StringeeConnectionListener;
 
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, LifecycleObserver {
-    private String to;
+public class StringeeConnectionActivity extends AppCompatActivity implements LifecycleObserver {
     //put your token here
     // private String token = "PUT_YOUR_TOKEN_HERE";
 
-    private TextView tvUserId;
     private ActivityResultLauncher<Intent> launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initAndConnectStringee();
     }
 
     public void initAndConnectStringee(String token) {
@@ -57,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onIncomingCall(final StringeeCall stringeeCall) {
                         Log.d(Common.TAG, "onIncomingCall: callId - " + stringeeCall.getCallId());
 
+                }
+
+                @Override
+                public void onIncomingCall2(StringeeCall2 stringeeCall2) {
+                    Log.d(Common.TAG, "onIncomingCall2: callId - " + stringeeCall2.getCallId());
                 }
 
                 @Override
