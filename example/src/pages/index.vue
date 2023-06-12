@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-text-field v-model="token" label="token"></v-text-field>
+      <w-text-field-copy v-model="token" label="token"></w-text-field-copy>
       <v-btn @click="connect">Connect</v-btn>
       <v-text-field v-model="callFrom" label="call from"></v-text-field>
       <v-text-field v-model="callTo" label="call to"></v-text-field>
@@ -16,12 +16,14 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { CapacitorStringee } from '@wellcare/capacitor-stringee'
 import { useLog } from '@wellcare/vue-component'
+// import { useStringee } from '../repositories/use-stringee'
 
 export default defineComponent({
   setup() {
     const { log } = useLog()
+    // const { token } = useStringee()
     const token = ref(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InN0cmluZ2VlLWFwaTt2PTEifQ.eyJqdGkiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCXzE2ODY1NTM2NjMyOTkiLCJpc3MiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCIiwiZXhwIjoxNjg2NjQwMDYzMjk5LCJ1c2VySWQiOiIzODcyODMiLCJpYXQiOjE2ODY1NTM2NjN9.-Dgu4PEwnb581Hgmh3Y-FImUwoYVuvGPdxBNHI_sDvU'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InN0cmluZ2VlLWFwaTt2PTEifQ.eyJqdGkiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCXzE2ODY1NTc0NTIwNzgiLCJpc3MiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCIiwiZXhwIjoxNjg2NjQzODUyMDc4LCJ1c2VySWQiOiIzODcyODMiLCJpYXQiOjE2ODY1NTc0NTJ9.l6SIoq-n0CPpDSST-K_5w_RdSuB_2O75TWcDh4-DsDM'
     )
     const callFrom = ref('387283')
     const callTo = ref('84329221173')
