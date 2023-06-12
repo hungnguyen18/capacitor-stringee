@@ -1,22 +1,20 @@
 package vn.wellcare.plugins.capacitor.stringee;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleObserver;
+import android.content.Context;
 
 import com.stringee.StringeeClient;
 
-public class StringeeConnectionActivity extends AppCompatActivity implements LifecycleObserver {
+public class StringeeConnectionActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private Context context;
+
+    public StringeeConnectionActivity(Context context) {
+        this.context = context;
     }
 
-    public StringeeClient  initAndConnectStringee(String token) {
+    public StringeeClient initAndConnectStringee(String token) {
         if (Common.client == null) {
-            Common.client = new StringeeClient(this);
+            Common.client = new StringeeClient(context);
         }
         Common.client.connect(token);
         return Common.client;

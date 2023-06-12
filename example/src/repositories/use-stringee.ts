@@ -7,16 +7,14 @@ export function useStringee() {
   const token = ref('')
   token.value = jwt.sign(
     {
-      jti: iss + new Date().toString(),
+      jti: iss + '_' + new Date().getTime().toString(),
       iss,
-      exp: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getTime() / 1000
+      exp: Math.floor(
+        new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getTime() / 1000
+      ),
+      userId: '387283'
     },
-    secret,
-    {
-      alg: 'HS256',
-      typ: 'JWT',
-      cty: 'stringee-api;v=1'
-    }
+    secret
   )
   return { token }
 }
