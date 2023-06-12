@@ -16,7 +16,7 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { CapacitorStringee } from '@wellcare/capacitor-stringee'
 import { useLog } from '@wellcare/vue-component'
-import { useStringee } from "../repositories/use-stringee"
+import { useStringee } from '../repositories/use-stringee'
 
 export default defineComponent({
   setup() {
