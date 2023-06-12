@@ -1,143 +1,168 @@
-package vn.wellcare.plugins.capacitor.stringee;
+import Foundation
+import Capacitor
+import UIKit
+/**
+ * Please read the Capacitor iOS Plugin Development Guide
+ * here: https://capacitorjs.com/docs/plugins/ios
+ */
+@objc(CapacitorStringeePlugin)
+public class CapacitorStringeePlugin: CAPPlugin {
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+    private let implementation = CapacitorStringee()
+    let stringeeClient = StringeeClient()
+    var callingVC: CallingViewController1
+    var token: String = ""
+    
+    @objc func echo(_ call: CAPPluginCall) {
+        let value = call.getString("value") ?? ""
+        call.resolve([
+            "value": implementation.echo(value)
+        ])
+    }
+    
+    @objc func StringeeConnect(_ call: CAPPluginCall) {
+        self.token = call.getString("token") ?? ""
+        if self.token == "" {
+            call.reject("No token provided")
+        }
+        stringeeClient.connectionDelegate = self;
+        stringeeClient.incomingCallDelegate = self
+        stringeeClient.connect(withAccessToken: self.token)
+        call.resolve(["token": self.token])
+    }
+    
+    @objc func StringeeCall(_ call: CAPPluginCall) {
+        let to = call.getString("to") ?? ""
+        if to == "" {
+            call.reject("No call target provided")
+        }
+        makeCall(to)
+    }
+    
+    @objc func StringeeReject(_ call: CAPPluginCall) {
+        call.resolve()
+    }
+    
+    @IBAction func makeCall(_ to: String) {
+        if !stringeeClient.hasConnected {
+            
+            return
+        }
+        
+        var callControl = CallControl()
+        callControl.from = stringeeClient.userId
+        callControl.to = to
+        callControl.isVideo = false
+        
+        DispatchQueue.main.async {
+            let topMost = UIApplication.getTopViewController()
+            let callingVC = CallingViewController1.init(control: callControl, call: nil)
+            callingVC.modalPresentationStyle = .fullScreen
+            self.callingVC = callingVC
+            topMost?.present(callingVC, animated: true)
+        }
+    }
+}
 
-import com.getcapacitor.JSObject;
-import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
-import com.getcapacitor.PluginMethod;
-import com.getcapacitor.annotation.CapacitorPlugin;
+extension CapacitorStringeePlugin: StringeeConnectionDelegate {
 
-import com.stringee.StringeeClient;
-import com.stringee.call.StringeeCall;
-import com.stringee.call.StringeeCall2;
-import com.stringee.exception.StringeeError;
-import com.stringee.listener.StringeeConnectionListener;
+    public func didConnect(_ stringeeClient: StringeeClient!, isReconnecting: Bool) {
+        let jsObject: [String: Any] = [
+            "uid": stringeeClient.userId!,
+            "isReconnecting": isReconnecting
+        ]
+        notifyListeners("onConnectionConnected", data: jsObject)
+        DispatchQueue.main.async {
+            InstanceManager.shared.viewController?.title = "Connected as \(stringeeClient.userId ?? "")"
+        }
+    }
 
-import org.json.JSONObject;
+    public func didDisConnect(_ stringeeClient: StringeeClient!, isReconnecting: Bool) {
+        let jsObject: [String: Any] = [
+            "uid": stringeeClient.userId!,
+            "isReconnecting": isReconnecting
+        ]
+        notifyListeners("onConnectionDisconnected", data: jsObject)
+        DispatchQueue.main.async {
+            InstanceManager.shared.viewController?.title = "Disconnected"
+        }
+    }
 
-@CapacitorPlugin(name = "CapacitorStringee")
-public class CapacitorStringeePlugin extends Plugin {
+    public func didFailWithError(_ stringeeClient: StringeeClient!, code: Int32, message: String!) {
+        let jsObject: [String: Any] = [
+            "code": code,
+            "error": code,
+            "message": message as Any
+        ]
+        notifyListeners("onConnectionError", data: jsObject)
+    }
 
+    public func requestAccessToken(_ stringeeClient: StringeeClient!) {
+        notifyListeners("onRequestNewToken", data: nil)
+    }
 
-  @PluginMethod
-  public void StringeeConnect(PluginCall call) {
-    String token = call.getString("token");
-    Log.d(Common.TAG, "StringeeConnect : " + call);
-    StringeeConnectionActivity connectionActivity = new StringeeConnectionActivity();
-    StringeeClient client = connectionActivity.initAndConnectStringee(token);
-    client.setConnectionListener(new StringeeConnectionListener() {
-      @Override
-      public void onConnectionConnected(StringeeClient stringeeClient, boolean b) {
-        Log.d(Common.TAG, "onConnectionConnected");
-        JSObject ret = new JSObject();
-        ret.put("client", stringeeClient);
-        ret.put("isReconnected", b);
-        notifyListeners("onConnectionConnected", ret);
-      }
+    public func didReceiveCustomMessage(_ stringeeClient: StringeeClient!, message: [AnyHashable : Any]!, fromUserId userId: String!) {
+        let jsObject: [String: Any] = [
+            "message": message as Any,
+            "from": userId as Any,
+            "msg": message as Any
+        ]
+        notifyListeners("onCustomMessage", data: jsObject);
+    }
+}
 
-      @Override
-      public void onConnectionDisconnected(StringeeClient stringeeClient, boolean isReconnecting) {
-        Log.d(Common.TAG, "onConnectionDisconnected");
-        JSObject ret = new JSObject();
-        ret.put("client", stringeeClient);
-        ret.put("isReconnecting", isReconnecting);
-        notifyListeners("onConnectionDisconnected", ret);
-      }
+extension CapacitorStringeePlugin: StringeeIncomingCallDelegate {
+    // Call 1
+    public func incomingCall(with stringeeClient: StringeeClient!, stringeeCall: StringeeCall!) {
+        DispatchQueue.main.async {
+            if (InstanceManager.shared.callingVC1 != nil || InstanceManager.shared.callingVC2 != nil) {
+                // Đang trong cuộc gọi khác => từ chối cuộc mới
+                stringeeCall.reject { (status, code, message) in
+                    print(message ?? "")
+                }
+                return
+            }
 
-      @Override
-      public void onIncomingCall(StringeeCall stringeeCall) {
-        Log.d(Common.TAG, "onIncomingCall: callId - " + stringeeCall.getCallId());
-        JSObject ret = new JSObject();
-        ret.put("callId", stringeeCall.getCallId());
-        notifyListeners("onIncomingCall", ret);
+            let callControl = CallControl()
+            let callingVC = CallingViewController1.init(control: callControl, call: stringeeCall)
+            callingVC.modalPresentationStyle = .fullScreen
+            UIApplication.shared.keyWindow?.rootViewController?.present(callingVC, animated: true, completion: nil)
+        }
+    }
 
-      }
+    // Call 2
+    public func incomingCall(with stringeeClient: StringeeClient!, stringeeCall2: StringeeCall2!) {
+        DispatchQueue.main.async {
+            if (InstanceManager.shared.callingVC1 != nil || InstanceManager.shared.callingVC2 != nil) {
+                // Đang trong cuộc gọi khác => từ chối cuộc mới
+                stringeeCall2.reject { (status, code, message) in
+                    print(message ?? "")
+                }
+                return
+            }
 
-      @Override
-      public void onIncomingCall2(StringeeCall2 stringeeCall2) {
-        Log.d(Common.TAG, "onIncomingCall2: callId - " + stringeeCall2.getCallId());
-        JSObject ret = new JSObject();
-        ret.put("callId", stringeeCall2.getCallId());
-        notifyListeners("onIncomingCall", ret);
-      }
-
-      @Override
-      public void onConnectionError(StringeeClient stringeeClient, StringeeError stringeeError) {
-        Log.d(Common.TAG, "onConnectionError: " + stringeeError.getMessage());
-        JSObject ret = new JSObject();
-        ret.put("client", stringeeClient);
-        ret.put("message", stringeeError.getMessage());
-        ret.put("error", stringeeError);
-        notifyListeners("onConnectionError", ret);
-      }
-
-      @Override
-      public void onRequestNewToken(StringeeClient stringeeClient) {
-        Log.d(Common.TAG, "onRequestNewToken");
-        JSObject ret = new JSObject();
-        ret.put("client", stringeeClient);
-        notifyListeners("onRequestNewToken", ret);
-        // Get new token here and connect to Stringe server
-      }
-
-      @Override
-      public void onCustomMessage(String from, JSONObject msg) {
-        Log.d(Common.TAG, "onCustomMessage: from - " + from + " - msg - " + msg);
-        JSObject ret = new JSObject();
-        ret.put("from", from);
-        ret.put("msg", msg);
-        notifyListeners("onCustomMessage", ret);
-      }
+            let callControl = CallControl()
+            let callingVC = CallingViewController2.init(control: callControl, call: stringeeCall2)
+            callingVC.modalPresentationStyle = .fullScreen
+            UIApplication.shared.keyWindow?.rootViewController?.present(callingVC, animated: true, completion: nil)
+        }
+    }
+}
 
 
-      @Override
-      public void onTopicMessage(String from, JSONObject msg) {
-        Log.d(Common.TAG, "onTopicMessage: from - " + from + " - msg - " + msg);
-        JSObject ret = new JSObject();
-        ret.put("from", from);
-        ret.put("msg", msg);
-        notifyListeners("onTopicMessage", ret);
-      }
-    });
-  }
-
-  // @PluginMethod
-  // public void StringeeCall(PluginCall call) {
-  //   String callFrom = call.getString("callFrom");
-  //   String callTo = call.getString("callTo");
-  //   implementation.StringeeCall(callFrom, callTo, (data) -> {
-  //     JSObject ret = new JSObject();
-  //     ret.put("data", data);
-  //     call.resolve(ret);
-  //   });
-  // }
-
-  @PluginMethod
-  public void StringeeCall(PluginCall call) {
-    Log.d(Common.TAG, "StringeeCall");
-    String from = call.getString("from");
-    String to = call.getString("to");
-    Context context = getContext();
-    Intent intent = new Intent(context, OutgoingCallActivity.class);
-    intent.putExtra("from", from);
-    intent.putExtra("to", to);
-    context.startActivity(intent);
-  }
-
-  @PluginMethod
-  public void StringeeReject(PluginCall call) {
-    Log.d(Common.TAG, "StringeeReject");
-  }
-
-  // @PluginMethod
-  // public void StringeeHangup(PluginCall call) {
-  //   implementation.StringeeHangup((data) -> {
-  //     JSObject ret = new JSObject();
-  //     ret.put("data", data);
-  //     call.resolve(ret);
-  //   });
-  // }
+extension UIApplication {
+    
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+            
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+            
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
+    }
 }

@@ -11,8 +11,6 @@ import Foundation
 class InstanceManager {
     static let shared = InstanceManager()
 
-    var viewController: ViewController?
-    var callingVC1: CallingViewController1?
-    var callingVC2: CallingViewController2?
+    var callingVC: CallingViewController?
 }
 

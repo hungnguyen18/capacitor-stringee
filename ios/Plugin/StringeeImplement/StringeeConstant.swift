@@ -20,6 +20,7 @@ struct CallControl {
 
     var from = ""
     var to = ""
+    var displayImage = ""
     var username = ""
     var displayName: String {
         if username.count > 0 {
