@@ -16,13 +16,12 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { CapacitorStringee } from '@wellcare/capacitor-stringee'
 import { useLog } from '@wellcare/vue-component'
+import { useStringee } from "../repositories/use-stringee"
 
 export default defineComponent({
   setup() {
     const { log } = useLog()
-    const token = ref(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InN0cmluZ2VlLWFwaTt2PTEifQ.eyJqdGkiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCXzE2ODM2ODcwMzA4MDgiLCJpc3MiOiJTS3NXTXlPZjhqUm51c3dPS1pEOXI5alZtVHE2bXB2MzhCIiwiZXhwIjoxNjgzNzczNDMwODA4LCJ1c2VySWQiOiIzODcyODMiLCJpYXQiOjE2ODM2ODcwMzB9.LHTymQDrGSwTKSAkZfddq-w5S_7Y0M8nAbDjr3jasIo'
-    )
+    const { token } = useStringee()
     const callFrom = ref('387283')
     const callTo = ref('84348375392')
     const status = ref('')

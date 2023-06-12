@@ -22,6 +22,10 @@ export default {
       accountBaseURL: process.env.ACCOUNT_BASE_URL,
       baseURL: process.env.API_ENDPOINT,
       xTenantId: process.env.X_TENTANT_ID || 'wellcare-plugin'
+    },
+    stringee: {
+      secret: '' || process.env.STRINGEE_SECRET,
+      iss: process.env.STRINGEE_ISS
     }
   },
   srcDir: process.cwd() + '/src/',
