@@ -24,7 +24,7 @@ export default {
       xTenantId: process.env.X_TENTANT_ID || 'wellcare-plugin'
     },
     stringee: {
-      secret: '' || process.env.STRINGEE_SECRET,
+      secret: process.env.STRINGEE_SECRET,
       iss: process.env.STRINGEE_ISS
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-text-field v-model="token" label="token"></v-text-field>
+      <v-text-copy v-model="token" label="token"></v-text-copy>
       <v-btn @click="connect">Connect</v-btn>
       <v-text-field v-model="callFrom" label="call from"></v-text-field>
       <v-text-field v-model="callTo" label="call to"></v-text-field>

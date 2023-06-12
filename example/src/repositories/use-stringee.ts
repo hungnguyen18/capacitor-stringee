@@ -4,12 +4,12 @@ import jwt from 'jsonwebtoken'
 export function useStringee() {
   const { $config } = useContext()
   const { secret, iss } = $config.stringee
-  const token = ref()
+  const token = ref('')
   token.value = jwt.sign(
     {
-      jti: iss + new Date().toString(), // JWT ID
-      iss, // API key sid
-      exp: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getTime() / 1000 // expiration time in seconds,
+      jti: iss + new Date().toString(),
+      iss,
+      exp: new Date(new Date().getTime() + 24 * 60 * 60 * 1000).getTime() / 1000
     },
     secret,
     {
