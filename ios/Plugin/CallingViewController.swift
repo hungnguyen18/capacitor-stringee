@@ -181,6 +181,7 @@ class CallingViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
                 self.dismiss(animated: true, completion: nil)
                 InstanceManager.shared.callingVC = nil
+                self.stringeeClient?.disconnect()
             })
         }
     }
