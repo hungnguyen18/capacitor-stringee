@@ -79,7 +79,6 @@ export default {
   eslint: {
     fix: true
   },
-
   // https://github.com/nuxt-community/stylelint-module
   stylelint: {
     fix: true

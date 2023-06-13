@@ -1,21 +1,3 @@
-/**!
- * Sortable 1.10.2
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
- */
-
-
-//! moment.js
-
-//! moment.js locale configuration
-
-//! moment.js
-
-
-/*! Capacitor: https://capacitorjs.com/ - MIT License */
-
-
 /*!
  * Vue.js v2.6.14
  * (c) 2014-2021 Evan You
@@ -36,6 +18,10 @@
  */
 
 
+//! moment.js
+
+//! moment.js locale configuration
+
 /*
 object-assign
 (c) Sindre Sorhus
@@ -52,6 +38,23 @@ object-assign
 /*! Capacitor: https://capacitorjs.com/ - MIT License */
 
 
+/*! Capacitor: https://capacitorjs.com/ - MIT License */
+
+
+/**!
+ * Sortable 1.10.2
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
+ */
+
+/**!
+ * Sortable 1.10.2
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
+ */
+
 //! moment.js locale configuration
 
 
@@ -66,17 +69,3 @@ object-assign
  * (c) 2018-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
  */
-
-
-/**!
- * Sortable 1.10.2
- * @author	RubaXa   <trash@rubaxa.org>
- * @author	owenm    <owen23355@gmail.com>
- * @license MIT
- */
-
-
-//! moment.js locale configuration
-
-
-//! moment.js locale configuration
