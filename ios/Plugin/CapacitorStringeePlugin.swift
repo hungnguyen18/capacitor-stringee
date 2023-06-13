@@ -38,6 +38,7 @@ public class CapacitorStringeePlugin: CAPPlugin {
             call.reject("No call target provided")
         }
         makeCall(to, displayName, displayImage)
+        call.resolve()
     }
     
     @objc func StringeeReject(_ call: CAPPluginCall) {
