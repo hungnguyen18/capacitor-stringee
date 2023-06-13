@@ -138,11 +138,15 @@ public class CapacitorStringeePlugin extends Plugin {
         Log.d(Common.TAG, "StringeeCall");
         String from = call.getString("callFrom");
         String to = call.getString("callTo");
+        String name = call.getString("displayName", "User");
+        String avatar = call.getString("displayImage", "");
         Context context = getContext();
         Intent intent = new Intent(context, OutgoingCallActivity.class);
         intent.putExtra("from", from);
         intent.putExtra("to", to);
         intent.putExtra("is_video_call", false);
+        intent.putExtra("name", name);
+        intent.putExtra("avatar", avatar);
         context.startActivity(intent);
 //    OutgoingCallActivity outgoingCallActivity = new OutgoingCallActivity();
 //    StringeeCall stringeeCall = outgoingCallActivity.startStringeeCall(from, to, false);

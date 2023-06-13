@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,13 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.squareup.picasso.Picasso;
 import com.stringee.call.StringeeCall;
 import com.stringee.call.StringeeCall.MediaState;
 import com.stringee.call.StringeeCall.SignalingState;
 import com.stringee.call.StringeeCall.StringeeCallListener;
 import com.stringee.common.StringeeAudioManager;
-import com.stringee.exception.StringeeError;
-import com.stringee.listener.StatusListener;
 
 import org.json.JSONObject;
 
@@ -40,22 +40,20 @@ public class OutgoingCallActivity
         extends AppCompatActivity
         implements View.OnClickListener {
 
-    private FrameLayout vLocal;
     private FrameLayout vRemote;
-    private TextView tvState;
+    private TextView tvState, vName;
     private ImageButton btnMute;
     private ImageButton btnSpeaker;
     private ImageButton btnVideo;
     private ImageButton btnEnd;
-    private ImageButton btnSwitch;
     private View vControl;
+
+    private ImageView vAvatar;
 
     private StringeeCall stringeeCall;
     private SensorManagerUtils sensorManagerUtils;
     private StringeeAudioManager audioManager;
-    private String from;
-    private String to;
-    private boolean isVideoCall;
+    private String from, to, name, avatar;
     private boolean isMute = false;
     private boolean isSpeaker = false;
     private boolean isVideo = false;
@@ -74,14 +72,16 @@ public class OutgoingCallActivity
         super.onCreate(savedInstanceState);
         from = getIntent().getStringExtra("from");
         to = getIntent().getStringExtra("to");
+        name = getIntent().getStringExtra("name");
+        avatar = getIntent().getStringExtra("avatar");
         Log.d(Common.TAG, "on going call from: " + from);
         Log.d(Common.TAG, "on going call to: " + to);
         startStringeeCall(from, to, false);
     }
 
     public void startStringeeCall(String from,
-                                          String to,
-                                          Boolean isVideoCall) {
+                                  String to,
+                                  Boolean isVideoCall) {
         if (isVideoCall == null) {
             isVideoCall = false;
         }
@@ -201,14 +201,15 @@ public class OutgoingCallActivity
      * Initialize the UI elements of the outgoing call activity.
      */
     private void initView() {
-        vLocal = findViewById(id.v_local);
         vRemote = findViewById(id.v_remote);
 
         vControl = findViewById(id.v_control);
 
-        TextView tvTo = findViewById(id.tv_to);
-        tvTo.setText(to);
         tvState = findViewById(id.tv_state);
+
+        vName = findViewById(id.v_name);
+
+        vAvatar = findViewById(id.v_avatar);
 
         btnMute = findViewById(id.btn_mute);
         btnMute.setOnClickListener(this);
@@ -216,23 +217,26 @@ public class OutgoingCallActivity
         btnSpeaker.setOnClickListener(this);
         btnVideo = findViewById(id.btn_video);
         btnVideo.setOnClickListener(this);
-        btnSwitch = findViewById(id.btn_switch);
-        btnSwitch.setOnClickListener(this);
+        // btnSwitch.setOnClickListener(this);
         btnEnd = findViewById(id.btn_end);
         btnEnd.setOnClickListener(this);
 
-        isSpeaker = isVideoCall;
+        isSpeaker = false;
+        vName.setText(name);
+        // isSpeaker = isVideoCall;
         btnSpeaker.setBackgroundResource(
                 isSpeaker ? drawable.btn_speaker_on : drawable.btn_speaker_off
         );
 
-        isVideo = isVideoCall;
+        isVideo = false;
+        // isVideo = isVideoCall;
         btnVideo.setImageResource(
                 isVideo ? drawable.btn_video : drawable.btn_video_off
         );
 
         btnVideo.setVisibility(isVideo ? View.VISIBLE : View.GONE);
-        btnSwitch.setVisibility(isVideo ? View.VISIBLE : View.GONE);
+        // btnSwitch.setVisibility(isVideo ? View.VISIBLE : View.GONE);
+        Picasso.get().load(avatar).into(vAvatar);
     }
 
     /**
@@ -252,7 +256,7 @@ public class OutgoingCallActivity
                                         availableAudioDevices
                         )
         );
-        audioManager.setSpeakerphoneOn(isVideoCall);
+        audioManager.setSpeakerphoneOn(false);
 
         //make new call
 //        if (Common.client.isConnected()) {
@@ -260,7 +264,7 @@ public class OutgoingCallActivity
 //        }
         try {
             stringeeCall = new StringeeCall(Common.client, from, to);
-            stringeeCall.setVideoCall(isVideoCall);
+            stringeeCall.setVideoCall(false);
             Log.d(Common.TAG, "init stringee call");
             stringeeCall.setCallListener(
                     new StringeeCallListener() {
@@ -347,8 +351,8 @@ public class OutgoingCallActivity
                                     () -> {
                                         Log.d(Common.TAG, "onLocalStream");
                                         if (stringeeCall.isVideoCall()) {
-                                            vLocal.removeAllViews();
-                                            vLocal.addView(stringeeCall.getLocalView());
+                                            // vLocal.removeAllViews();
+                                            // vLocal.addView(stringeeCall.getLocalView());
                                             stringeeCall.renderLocalView(true);
                                         }
                                     }
@@ -419,38 +423,40 @@ public class OutgoingCallActivity
             if (stringeeCall != null) {
                 stringeeCall.enableVideo(isVideo);
             }
-        } else if (id == R.id.btn_switch) {
-            if (stringeeCall != null) {
-                stringeeCall.switchCamera(
-                        new StatusListener() {
-                            @Override
-                            public void onSuccess() {
-                            }
-
-                            @Override
-                            public void onError(StringeeError stringeeError) {
-                                super.onError(stringeeError);
-                                runOnUiThread(
-                                        () -> {
-                                            Log.d(
-                                                    Common.TAG,
-                                                    "switchCamera error: " + stringeeError.getMessage()
-                                            );
-                                            Utils.reportMessage(
-                                                    OutgoingCallActivity.this,
-                                                    stringeeError.getMessage()
-                                            );
-                                        }
-                                );
-                            }
-                        }
-                );
-            }
         }
+//        else if (id == R.id.btn_switch) {
+//            if (stringeeCall != null) {
+//                stringeeCall.switchCamera(
+//                        new StatusListener() {
+//                            @Override
+//                            public void onSuccess() {
+//                            }
+//
+//                            @Override
+//                            public void onError(StringeeError stringeeError) {
+//                                super.onError(stringeeError);
+//                                runOnUiThread(
+//                                        () -> {
+//                                            Log.d(
+//                                                    Common.TAG,
+//                                                    "switchCamera error: " + stringeeError.getMessage()
+//                                            );
+//                                            Utils.reportMessage(
+//                                                    OutgoingCallActivity.this,
+//                                                    stringeeError.getMessage()
+//                                            );
+//                                        }
+//                                );
+//                            }
+//                        }
+//                );
+//            }
+//        }
     }
 
     private void endCall() {
         stringeeCall.hangup();
+        Common.client.disconnect();
         dismissLayout();
     }
 
@@ -462,7 +468,7 @@ public class OutgoingCallActivity
         sensorManagerUtils.releaseSensor();
         vControl.setVisibility(View.GONE);
         btnEnd.setVisibility(View.GONE);
-        btnSwitch.setVisibility(View.GONE);
+        // btnSwitch.setVisibility(View.GONE);
         Utils.postDelay(
                 () -> {
                     Common.isInCall = false;

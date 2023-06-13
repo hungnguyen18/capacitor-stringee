@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    android:gravity="center_horizontal"
+    android:gravity="fill_horizontal"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/v_remote"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/v_local"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="20dp" />
-
-    <ImageButton
-        android:id="@+id/btn_switch"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/ic_switch" 
-        android:contentDescription="Switch" 
-    />
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_to"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/v_avatar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
+            android:paddingTop="150dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <FrameLayout
+            android:id="@+id/v_remote"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content">
+
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/tv_state"
-            android:layout_width="wrap_content"
+            android:id="@+id/v_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Calling"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:gravity="center"
+            android:text="User"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
+            android:text="Calling..."
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
 
         <LinearLayout
             android:id="@+id/v_control"
@@ -90,9 +90,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginVertical="20dp"
-            android:background="@drawable/btn_end_call_selector" 
-            android:contentDescription="End Call" 
-            />
+            android:background="@drawable/btn_end_call_selector"
+            android:contentDescription="End Call" />
     </LinearLayout>
 
 </RelativeLayout>
