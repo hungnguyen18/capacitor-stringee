@@ -44,7 +44,9 @@ export default defineComponent({
         StringeePlugin.StringeeCall(
           {
             callFrom: callFrom.value,
-            callTo: callTo.value
+            callTo: callTo.value,
+            displayName: 'User',
+            displayImage: 'https://i.pravatar.cc/300'
           },
           onCallEvent
         )
