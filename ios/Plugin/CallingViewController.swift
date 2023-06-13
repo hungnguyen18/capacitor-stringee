@@ -5,14 +5,13 @@
 //  Created by Thịnh Giò on 2/10/20.
 //  Copyright © 2020 ThinhNT. All rights reserved.
 //
-
 import UIKit
 import MediaPlayer
 
 class CallingViewController: UIViewController {
 
-    @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var ivDisplayImage: UIImageView!
+    @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var lbStatus: UILabel!
     @IBOutlet weak var ivQuality: UIImageView!
     @IBOutlet weak var btMute: UIButton!    
@@ -224,8 +223,24 @@ class CallingViewController: UIViewController {
     private func setupUI() {
         UIDevice.current.isProximityMonitoringEnabled = true
         UIApplication.shared.isIdleTimerDisabled = callControl.isVideo
-        let url = URL(string: callControl.displayImage)
-        let data = try? Data(contentsOf: url!)
+        let imageUrl = URL(string: callControl.displayImage)!
+        let task = URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
+            if let error = error {
+                print("Error downloading image: \(error)")
+                return
+            }
+            
+            guard let data = data, let image = UIImage(data: data) else {
+                print("Invalid image data")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                // Set the downloaded image to the UIImageView instance
+                self.ivDisplayImage.image = image
+            }
+        }
+        task.resume()
         // Fill data
         self.lbStatus.text = callControl.isIncoming ? "Incoming Call" : "Outgoing Call"
         self.lbName.text = callControl.displayName

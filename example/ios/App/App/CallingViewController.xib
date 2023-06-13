@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CallingViewController1" customModule="App" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CallingViewController" customModule="WellcareCapacitorStringee">
             <connections>
                 <outlet property="blurView" destination="YI4-he-cWp" id="rex-iX-oKX"/>
                 <outlet property="btAnswer" destination="SJo-W2-ceo" id="nF6-FV-rtK"/>
@@ -16,6 +16,7 @@
                 <outlet property="btMute" destination="eyq-tC-duC" id="92Z-bK-JBF"/>
                 <outlet property="btReject" destination="Yim-Ux-Vyh" id="x4M-uR-ckN"/>
                 <outlet property="btSpeaker" destination="hEh-W0-vkz" id="QZT-j1-4ci"/>
+                <outlet property="ivDisplayImage" destination="ReB-XB-Y8C" id="Rwu-Ds-Lco"/>
                 <outlet property="lbName" destination="oYs-Pt-AXb" id="FcW-uL-Oel"/>
                 <outlet property="lbStatus" destination="XSJ-gX-fez" id="HP3-zH-DC9"/>
                 <outlet property="localView" destination="kNv-x5-ttk" id="gLk-BE-oqj"/>
@@ -42,12 +43,17 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDi-UU-Wb6" userLabel="ContentView">
                     <rect key="frame" x="0.0" y="48" width="414" height="794"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" id="ReB-XB-Y8C">
-                            <rect key="frame" x="155.5" y="80" width="100" height="100"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ReB-XB-Y8C">
+                            <rect key="frame" x="146.29381443303646" y="80.000000000004547" width="120.00000000006253" height="120"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <accessibility key="accessibilityConfiguration">
                                 <bool key="isElement" value="YES"/>
                             </accessibility>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="60"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IVv-Dn-v5x">
                             <rect key="frame" x="97" y="387" width="220" height="120"/>
@@ -192,6 +198,5 @@
         <image name="icon_accept_call" width="60" height="60"/>
         <image name="icon_mute" width="47" height="47"/>
         <image name="icon_speaker" width="47" height="47"/>
-        <image name="logo.png" width="512" height="512"/>
     </resources>
 </document>
