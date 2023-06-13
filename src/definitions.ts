@@ -8,9 +8,11 @@ export interface CapacitorStringeePlugin {
   /*
   StringeeConnect(token: string, listenerFunc: (data: any) => void): void
   StringeeCall(
-    callFrom: string,
-    callTo: string,
-    listenerFunc: (data: any) => void
+    data: {
+      callFrom: string
+      callTo: string
+    },
+    listenerFunc?: (data: any) => void
   ): void
   StringeeReject(listenerFunc: (data: any) => void): void
   StringeeHangup(listenerFunc: (data: any) => void): void
