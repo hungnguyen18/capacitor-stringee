@@ -1,13 +1,13 @@
 import { WebPlugin } from '@capacitor/core'
 
-import type { CapacitorStringeePlugin } from './definitions'
+// import type { CapacitorStringeePlugin } from './definitions'
 // import StartCall from './stringee/start-call'
 
 declare var StringeeClient: any
 declare var StringeeCall: any
 export class CapacitorStringeeWeb
   extends WebPlugin
-  implements CapacitorStringeePlugin
+  //implements CapacitorStringeePlugin
 {
   #client: any
   #call: any
