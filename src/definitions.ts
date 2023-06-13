@@ -5,11 +5,18 @@ export interface CapacitorStringeePlugin {
    * echo input value
    */
   echo(options: { value: string }): Promise<{ value: string }>
-  StringeeConnect(token: string, listenerFunc: (data: any) => void): void
+  StringeeConnect(
+    data: {
+      token: string
+    },
+    listenerFunc?: (data: any) => void
+  ): void
   StringeeCall(
-    callFrom: string,
-    callTo: string,
-    listenerFunc: (data: any) => void
+    data: {
+      callFrom: string
+      callTo: string
+    },
+    listenerFunc?: (data: any) => void
   ): void
   StringeeReject(listenerFunc: (data: any) => void): void
   StringeeHangup(listenerFunc: (data: any) => void): void

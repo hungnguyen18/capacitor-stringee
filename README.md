@@ -46,13 +46,13 @@ echo input value
 ### StringeeConnect(...)
 
 ```typescript
-StringeeConnect(token: string, listenerFunc: (data: any) => void) => void
+StringeeConnect(data: { token: string; }, listenerFunc?: ((data: any) => void) | undefined) => void
 ```
 
-| Param              | Type                                |
-| ------------------ | ----------------------------------- |
-| **`token`**        | <code>string</code>                 |
-| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
+| Param              | Type                                  |
+| ------------------ | ------------------------------------- |
+| **`data`**         | <code>{ token: string; }</code>       |
+| **`listenerFunc`** | <code>((data: any) =&gt; void)</code> |
 
 --------------------
 
@@ -60,14 +60,13 @@ StringeeConnect(token: string, listenerFunc: (data: any) => void) => void
 ### StringeeCall(...)
 
 ```typescript
-StringeeCall(callFrom: string, callTo: string, listenerFunc: (data: any) => void) => void
+StringeeCall(data: { callFrom: string; callTo: string; }, listenerFunc?: ((data: any) => void) | undefined) => void
 ```
 
-| Param              | Type                                |
-| ------------------ | ----------------------------------- |
-| **`callFrom`**     | <code>string</code>                 |
-| **`callTo`**       | <code>string</code>                 |
-| **`listenerFunc`** | <code>(data: any) =&gt; void</code> |
+| Param              | Type                                               |
+| ------------------ | -------------------------------------------------- |
+| **`data`**         | <code>{ callFrom: string; callTo: string; }</code> |
+| **`listenerFunc`** | <code>((data: any) =&gt; void)</code>              |
 
 --------------------
 

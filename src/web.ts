@@ -12,13 +12,13 @@ export class CapacitorStringeeWeb
   #client: any
   #call: any
   #isAuth: boolean = false
-  StringeeConnect(token: string, listenerFunc: (data: any) => void) {
+  StringeeConnect(data: { token: string }, listenerFunc: (data: any) => void) {
     const dataEmit = {
       event: 'none',
       data: {}
     }
     this.#client = new StringeeClient()
-    this.#client.connect(token)
+    this.#client.connect(data.token)
     this.#client.on('connect', () => {
       // this.notifyListeners('stringee-log', 'connect')
       dataEmit.event = 'connect'
@@ -53,8 +53,10 @@ export class CapacitorStringeeWeb
     })
   }
   StringeeCall(
-    callFrom: string,
-    callTo: string,
+    data: {
+      callFrom: string
+      callTo: string
+    },
     listenerFunc: (data: any) => void
   ) {
     // const emitEvent = (name: string, data: any) => {
@@ -65,7 +67,7 @@ export class CapacitorStringeeWeb
       data: {}
     }
     if (this.#isAuth && this.#client) {
-      this.#call = new StringeeCall(this.#client, callFrom, callTo)
+      this.#call = new StringeeCall(this.#client, data.callFrom, data.callTo)
       this.#call.makeCall((res: any) => {
         if (res.r !== 0) console.error(res.message)
       })
