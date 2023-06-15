@@ -224,24 +224,26 @@ class CallingViewController: UIViewController {
     private func setupUI() {
         UIDevice.current.isProximityMonitoringEnabled = true
         UIApplication.shared.isIdleTimerDisabled = callControl.isVideo
-        let imageUrl = URL(string: callControl.displayImage)!
-        let task = URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
-            if let error = error {
-                print("Error downloading image: \(error)")
-                return
+        if (callControl.displayImage != "") {
+            let imageUrl = URL(string: callControl.displayImage)!
+            let task = URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
+                if let error = error {
+                    print("Error downloading image: \(error)")
+                    return
+                }
+                
+                guard let data = data, let image = UIImage(data: data) else {
+                    print("Invalid image data")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    // Set the downloaded image to the UIImageView instance
+                    self.ivDisplayImage.image = image
+                }
             }
-            
-            guard let data = data, let image = UIImage(data: data) else {
-                print("Invalid image data")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                // Set the downloaded image to the UIImageView instance
-                self.ivDisplayImage.image = image
-            }
+            task.resume()
         }
-        task.resume()
         // Fill data
         self.lbStatus.text = callControl.isIncoming ? "Incoming Call" : "Outgoing Call"
         self.lbName.text = callControl.displayName
